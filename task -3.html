@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varsha's Food Blog - Taste of India</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://i.pinimg.com/736x/70/43/74/70437490401447d3b5f9d5d3c8e8b8e0.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #ff9ff3, #54a0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 8px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #feca57;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        h2 i {
+            font-size: 2rem;
+        }
+
+        /* Featured Destinations */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .destination-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .destination-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ff9ff3;
+        }
+
+        .card-content p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .specialty {
+            display: inline-block;
+            background: rgba(254, 202, 87, 0.3);
+            color: #feca57;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Food Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            height: 250px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+
+        /* Recipe Section */
+        .recipe-container {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .recipe-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .recipe-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .recipe-details {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .recipe-details h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ff9ff3;
+        }
+
+        .ingredients {
+            margin-bottom: 20px;
+        }
+
+        .ingredients ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .ingredients li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .ingredients li:before {
+            content: "•";
+            color: #feca57;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Newsletter */
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 250px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #feca57;
+            transform: translateY(-5px);
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .nav {
+                gap: 10px;
+            }
+            
+            .nav a {
+                padding: 6px 15px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            .destination-card, .gallery-item {
+                min-width: 100%;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Varsha's Food Blog</h1>
+            <p class="subtitle">A Culinary Journey Through India's Diverse Flavors</p>
+            <div class="nav">
+                <a href="#destinations">Destinations</a>
+                <a href="#gallery">Food Gallery</a>
+                <a href="#recipes">Recipes</a>
+                <a href="#about">About Me</a>
+                <a href="#newsletter">Newsletter</a>
+            </div>
+        </header>
+
+        <!-- Featured Destinations -->
+        <section class="section" id="destinations">
+            <h2><i class="fas fa-map-marker-alt"></i> Food Destinations</h2>
+            <p>Explore India's most delicious cities and their signature dishes</p>
+            
+            <div class="destinations-grid">
+                <div class="destination-card">
+                    <div class="card-image">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSHuqEQvNy--dkfLm4j4WW74dgvb2tb4HilQ&s" alt="Chole Bhature">
+                    </div>
+                    <div class="card-content">
+                        <h3>Old Delhi</h3>
+                        <p>Explore the narrow lanes of Chandni Chowk, where the air is thick with the aroma of sizzling parathas, spicy chaat, and sweet jalebis.</p>
+                        <span class="specialty">Specialty: Chole Bhature & Parathas</span>
+                    </div>
+                </div>
+                
+                <div class="destination-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Kolkata Food">
+                    </div>
+                    <div class="card-content">
+                        <h3>Kolkata</h3>
+                        <p>The city of joy offers exquisite Bengali cuisine, from street-side puchkas to elaborate fish curries and iconic sweets like rasgulla.</p>
+                        <span class="specialty">Specialty: Macher Jhol & Rosogolla</span>
+                    </div>
+                </div>
+                
+                <div class="destination-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2067&q=80" alt="Mumbai Street Food">
+                    </div>
+                    <div class="card-content">
+                        <h3>Mumbai</h3>
+                        <p>From vada pav to bhel puri, Mumbai's street food scene is legendary. Don't miss the coastal delicacies and Irani cafes.</p>
+                        <span class="specialty">Specialty: Vada Pav & Seafood</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Food Gallery -->
+        <section class="section" id="gallery">
+            <h2><i class="fas fa-utensils"></i> Food Gallery</h2>
+            <p>A visual feast of India's most iconic dishes</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1971&q=80" alt="Biryani">
+                    <div class="gallery-caption">
+                        <h4>Hyderabadi Biryani</h4>
+                        <p>Aromatic rice dish with tender meat</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Dosa">
+                    <div class="gallery-caption">
+                        <h4>Masala Dosa</h4>
+                        <p>Crispy rice crepe with spiced potato filling</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1589647363585-f4a7d3877b10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Chaat">
+                    <div class="gallery-caption">
+                        <h4>Street Chaat</h4>
+                        <p>Tangy and spicy savory snacks</p>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Kebabs">
+                    <div class="gallery-caption">
+                        <h4>Lucknowi Kebabs</h4>
+                        <p>Succulent grilled meat delicacies</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recipe Section -->
+        <section class="section" id="recipes">
+            <h2><i class="fas fa-book-open"></i> Featured Recipe</h2>
+            <p>Butter Chicken - A North Indian Classic</p>
+            
+            <div class="recipe-container">
+                <div class="recipe-image">
+                    <img src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Butter Chicken">
+                </div>
+                <div class="recipe-details">
+                    <h3>Butter Chicken (Murgh Makhani)</h3>
+                    <p>A rich and creamy curry that's beloved worldwide. This recipe stays true to its Delhi origins while being accessible for home cooks.</p>
+                    
+                    <div class="ingredients">
+                        <h4>Ingredients:</h4>
+                        <ul>
+                            <li>500g boneless chicken, cubed</li>
+                            <li>1 cup yogurt</li>
+                            <li>2 tbsp ginger-garlic paste</li>
+                            <li>1 tsp garam masala</li>
+                            <li>1 tsp red chili powder</li>
+                            <li>2 tbsp butter</li>
+                            <li>1 cup tomato puree</li>
+                            <li>1/2 cup fresh cream</li>
+                            <li>1 tsp kasuri methi (dried fenugreek leaves)</li>
+                            <li>Salt to taste</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn">
+                        <i class="fas fa-utensils"></i> View Full Recipe
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section" id="about">
+            <h2><i class="fas fa-user"></i> About Varsha</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Hello! I'm Varsha, a food enthusiast and travel blogger with a passion for exploring India's diverse culinary landscape.</p>
+                    <p>Growing up in a Bengali family in Kolkata, I developed an early appreciation for regional flavors. My journey began in my grandmother's kitchen, where I learned traditional recipes that have been passed down through generations.</p>
+                    <p>Through this blog, I share my culinary adventures across India - from street food stalls in Mumbai to royal kitchens in Rajasthan. Join me as we explore the stories behind India's most beloved dishes!</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1976&q=80" alt="Varsha">
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="section" id="newsletter">
+            <h2><i class="fas fa-paper-plane"></i> Join My Food Journey</h2>
+            <p>Subscribe to my newsletter for exclusive recipes, travel tips, and culinary stories from across India</p>
+            
+            <div class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Your email address">
+                <button class="btn">
+                    <i class="fas fa-envelope"></i> Subscribe
+                </button>
+            </div>
+        </section>
+
+        <footer>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+            </div>
+            <p>Varsha's Food Blog &copy; 2023 | Celebrating India's Culinary Diversity</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple form submission for newsletter
+        document.querySelector('.btn').addEventListener('click', function() {
+            const email = document.querySelector('.newsletter-input').value;
+            if (email) {
+                alert('Thank you for subscribing to Varsha\'s Food Blog! You\'ll receive our next newsletter soon.');
+                document.querySelector('.newsletter-input').value = '';
+            } else {
+                alert('Please enter your email address to subscribe.');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // View Full Recipe button functionality
+        document.querySelector('.recipe-details .btn').addEventListener('click', function() {
+            alert('Full recipe details will be displayed here! For now, enjoy the delicious Butter Chicken image and ingredients list.');
+        });
+    </script>
+</body>
+</html>
